@@ -1,1 +1,2707 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="manifest" href="./manifest.json">
 
+<meta name="theme-color" content="#0d6efd">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+  <base target="_top">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Izin Siswa - SMAN 2 Rangkasbitung</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    /* ================= HEADER ================= */
+
+    .header {
+      background: linear-gradient(
+        135deg,
+        #0f3d91,
+        #2563eb
+      );
+
+      color: white;
+      padding: 15px 20px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      background: white;
+      color: #0f3d91;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-top: 3px;
+    }
+
+    .header button {
+      background: white;
+      color: #0f3d91;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* ================= CONTAINER ================= */
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* ================= CARD ================= */
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+
+      box-shadow:
+        0 3px 15px rgba(15, 23, 42, 0.08);
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    /* ================= FORM ================= */
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 12px;
+
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+
+      background: white;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+
+      box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    /* ================= GRID ================= */
+
+    .grid {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 15px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 15px;
+    }
+
+    /* ================= BUTTON ================= */
+
+    .btn {
+      border: none;
+      border-radius: 8px;
+      padding: 11px 16px;
+
+      cursor: pointer;
+      font-weight: bold;
+
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-success {
+      background: #16a34a;
+      color: white;
+    }
+
+    .btn-danger {
+      background: #dc2626;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #64748b;
+      color: white;
+    }
+
+    .btn-light {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    .btn-small {
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    /* ================= DASHBOARD ================= */
+
+    .stats {
+      display: grid;
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+
+      box-shadow:
+        0 3px 15px rgba(15, 23, 42, 0.08);
+
+      border-left: 5px solid #2563eb;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 30px;
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    /* ================= TABLE ================= */
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+
+    th,
+    td {
+      padding: 11px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: bold;
+      color: #334155;
+    }
+
+    tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* ================= STATUS ================= */
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .badge-warning {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-danger {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .badge-blue {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    /* ================= LOGIN ================= */
+
+    .login-container {
+      max-width: 420px;
+      margin: 50px auto;
+    }
+
+    .login-logo {
+      width: 65px;
+      height: 65px;
+
+      margin: 0 auto 15px;
+
+      background: #2563eb;
+      color: white;
+
+      border-radius: 16px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .login-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .login-subtitle {
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    /* ================= TOOLBAR ================= */
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: end;
+    }
+
+    .toolbar-item {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    /* ================= MODAL ================= */
+
+    .modal {
+      display: none;
+
+      position: fixed;
+      inset: 0;
+
+      background: rgba(15, 23, 42, 0.55);
+
+      align-items: center;
+      justify-content: center;
+
+      z-index: 1000;
+
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    /* ================= LOADING ================= */
+
+    .loading {
+      display: none;
+
+      position: fixed;
+      inset: 0;
+
+      background: rgba(255,255,255,0.7);
+
+      align-items: center;
+      justify-content: center;
+
+      z-index: 2000;
+    }
+
+    .loading.show {
+      display: flex;
+    }
+
+    .loading-box {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 12px;
+
+      box-shadow:
+        0 5px 30px rgba(0,0,0,0.15);
+
+      font-weight: bold;
+    }
+
+    /* ================= TOAST ================= */
+
+    .toast {
+      position: fixed;
+
+      right: 20px;
+      bottom: 20px;
+
+      background: #0f172a;
+      color: white;
+
+      padding: 13px 18px;
+
+      border-radius: 9px;
+
+      box-shadow:
+        0 5px 20px rgba(0,0,0,0.2);
+
+      display: none;
+
+      z-index: 3000;
+
+      max-width: 350px;
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    .toast.success {
+      background: #15803d;
+    }
+
+    .toast.error {
+      background: #b91c1c;
+    }
+
+    /* ================= EMPTY ================= */
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #64748b;
+    }
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+      text-align: center;
+      padding: 30px 15px;
+
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 768px) {
+
+      .header {
+        padding: 12px;
+      }
+
+      .brand-title {
+        font-size: 15px;
+      }
+
+      .brand-subtitle {
+        font-size: 10px;
+      }
+
+      .logo {
+        width: 40px;
+        height: 40px;
+      }
+
+      .header button {
+        padding: 8px 11px;
+        font-size: 12px;
+      }
+
+      .container {
+        padding: 12px;
+      }
+
+      .grid,
+      .grid-3,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 15px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .toolbar-item {
+        width: 100%;
+      }
+
+      .stat-value {
+        font-size: 25px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<!-- ======================================================
+     HEADER
+====================================================== -->
+
+<header class="header">
+
+  <div class="brand">
+
+    <div class="logo">
+      IS
+    </div>
+
+    <div>
+      <div class="brand-title">
+        Izin Siswa
+      </div>
+
+      <div class="brand-subtitle">
+        SMA Negeri 2 Rangkasbitung
+      </div>
+    </div>
+
+  </div>
+
+  <button id="loginButton"
+          onclick="showLogin()">
+    Login
+  </button>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ======================================================
+     HALAMAN PUBLIK
+====================================================== -->
+
+<section id="publicPage"
+         class="page active">
+
+  <div class="card">
+
+    <div class="card-title">
+      Rekap Izin Siswa
+    </div>
+
+    <div class="toolbar">
+
+      <div class="toolbar-item">
+
+        <label>
+          Tanggal
+        </label>
+
+        <input
+          type="date"
+          id="publicDate">
+
+      </div>
+
+      <div class="toolbar-item">
+
+        <label>
+          Pencarian
+        </label>
+
+        <input
+          type="text"
+          id="publicSearch"
+          placeholder="Nama, kelas atau NISN..."
+          oninput="filterPublicTable()">
+
+      </div>
+
+      <div>
+
+        <button
+          class="btn btn-primary"
+          onclick="loadPublicData()">
+
+          Tampilkan
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- STATISTIK -->
+
+  <div class="stats">
+
+    <div class="stat-card">
+
+      <div class="stat-label">
+        Total Siswa Izin
+      </div>
+
+      <div
+        class="stat-value"
+        id="statTotal">
+        0
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-label">
+        Izin Keluar
+      </div>
+
+      <div
+        class="stat-value"
+        id="statKeluar">
+        0
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-label">
+        Izin Masuk
+      </div>
+
+      <div
+        class="stat-value"
+        id="statMasuk">
+        0
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- TABEL PUBLIK -->
+
+  <div class="card">
+
+    <div class="card-title">
+      Siswa dengan Izin Disetujui
+    </div>
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>No</th>
+            <th>Nama</th>
+            <th>NISN</th>
+            <th>Kelas</th>
+            <th>Jenis</th>
+            <th>Alasan</th>
+            <th>Keluar</th>
+            <th>Kembali</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="publicTable">
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     LOGIN
+====================================================== -->
+
+<section id="loginPage"
+         class="page">
+
+  <div class="login-container">
+
+    <div class="card">
+
+      <div class="login-logo">
+        IS
+      </div>
+
+      <div class="login-title">
+        Login Pengguna
+      </div>
+
+      <div class="login-subtitle">
+        Sistem Izin Masuk dan Keluar Siswa
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Username
+        </label>
+
+        <input
+          type="text"
+          id="username"
+          autocomplete="username">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Password
+        </label>
+
+        <input
+          type="password"
+          id="password"
+          autocomplete="current-password">
+
+      </div>
+
+
+      <button
+        class="btn btn-primary"
+        style="width:100%;"
+        onclick="loginUser()">
+
+        Login
+
+      </button>
+
+
+      <br><br>
+
+      <button
+        class="btn btn-light"
+        style="width:100%;"
+        onclick="showPublic()">
+
+        Kembali
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     DASHBOARD WALI
+====================================================== -->
+
+<section id="waliPage"
+         class="page">
+
+  <div class="card">
+
+    <div class="card-title">
+      Dashboard Wali Kelas
+    </div>
+
+    <div id="waliInfo"
+         style="color:#64748b;margin-bottom:15px;">
+    </div>
+
+
+    <div class="grid">
+
+      <div class="form-group">
+
+        <label>
+          Tanggal Izin
+        </label>
+
+        <input
+          type="date"
+          id="izinTanggal">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Siswa
+        </label>
+
+        <select id="izinSiswa">
+
+          <option value="">
+            -- Pilih Siswa --
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Jenis Izin
+        </label>
+
+        <select id="izinJenis">
+
+          <option value="KELUAR">
+            KELUAR
+          </option>
+
+          <option value="MASUK">
+            MASUK
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Waktu Keluar
+        </label>
+
+        <input
+          type="time"
+          id="izinWaktuKeluar">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Waktu Kembali
+        </label>
+
+        <input
+          type="time"
+          id="izinWaktuKembali">
+
+      </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Alasan
+      </label>
+
+      <textarea
+        id="izinAlasan"
+        placeholder="Masukkan alasan izin..."></textarea>
+
+    </div>
+
+
+    <button
+      class="btn btn-success"
+      onclick="simpanIzin()">
+
+      Simpan Pengajuan
+
+    </button>
+
+  </div>
+
+
+  <!-- RIWAYAT -->
+
+  <div class="card">
+
+    <div class="card-title">
+      Riwayat Pengajuan
+    </div>
+
+
+    <div class="toolbar">
+
+      <div class="toolbar-item">
+
+        <label>
+          Tanggal
+        </label>
+
+        <input
+          type="date"
+          id="waliHistoryDate">
+
+      </div>
+
+
+      <div class="toolbar-item">
+
+        <label>
+          Pencarian
+        </label>
+
+        <input
+          type="text"
+          id="waliSearch"
+          placeholder="Nama, kelas atau NISN..."
+          oninput="filterWaliTable()">
+
+      </div>
+
+
+      <div class="toolbar-item">
+
+        <label>
+          Status
+        </label>
+
+        <select
+          id="waliStatusFilter"
+          onchange="filterWaliTable()">
+
+          <option value="SEMUA">
+            Semua Status
+          </option>
+
+          <option value="DIAJUKAN">
+            Diajukan
+          </option>
+
+          <option value="DISETUJUI">
+            Disetujui
+          </option>
+
+          <option value="DITOLAK">
+            Ditolak
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div>
+
+        <button
+          class="btn btn-primary"
+          onclick="loadWaliHistory()">
+
+          Tampilkan
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <br>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>No</th>
+            <th>Nama</th>
+            <th>Kelas</th>
+            <th>Jenis</th>
+            <th>Alasan</th>
+            <th>Waktu</th>
+            <th>Status</th>
+            <th>Keterangan</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="waliTable">
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     DASHBOARD WAKASEK
+====================================================== -->
+
+<section id="wakaPage"
+         class="page">
+
+  <div class="card">
+
+    <div class="card-title">
+      Dashboard Wakasek
+    </div>
+
+    <div id="wakaInfo"
+         style="color:#64748b;margin-bottom:15px;">
+    </div>
+
+
+    <div class="toolbar">
+
+      <div class="toolbar-item">
+
+        <label>
+          Tanggal
+        </label>
+
+        <input
+          type="date"
+          id="wakaDate">
+
+      </div>
+
+
+      <div class="toolbar-item">
+
+        <label>
+          Pencarian
+        </label>
+
+        <input
+          type="text"
+          id="wakaSearch"
+          placeholder="Nama, kelas atau NISN..."
+          oninput="filterWakaTable()">
+
+      </div>
+
+
+      <div class="toolbar-item">
+
+        <label>
+          Status
+        </label>
+
+        <select
+          id="wakaStatusFilter"
+          onchange="filterWakaTable()">
+
+          <option value="SEMUA">
+            Semua Status
+          </option>
+
+          <option value="DIAJUKAN">
+            Diajukan
+          </option>
+
+          <option value="DISETUJUI">
+            Disetujui
+          </option>
+
+          <option value="DITOLAK">
+            Ditolak
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div>
+
+        <button
+          class="btn btn-primary"
+          onclick="loadWakaData()">
+
+          Tampilkan
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-title">
+      Pengajuan Izin
+    </div>
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>No</th>
+            <th>Nama</th>
+            <th>NISN</th>
+            <th>Kelas</th>
+            <th>Jenis</th>
+            <th>Alasan</th>
+            <th>Waktu</th>
+            <th>Pengaju</th>
+            <th>Status</th>
+            <th>Aksi</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="wakaTable">
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<div class="footer">
+
+  Izin Siswa &bull;
+  SMA Negeri 2 Rangkasbitung
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     MODAL PENOLAKAN
+====================================================== -->
+
+<div
+  class="modal"
+  id="rejectModal">
+
+  <div class="modal-box">
+
+    <div class="modal-title">
+      Tolak Pengajuan Izin
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        Alasan Penolakan
+      </label>
+
+      <textarea
+        id="rejectReason"
+        placeholder="Masukkan alasan penolakan..."></textarea>
+
+    </div>
+
+    <div class="modal-footer">
+
+      <button
+        class="btn btn-light"
+        onclick="closeRejectModal()">
+
+        Batal
+
+      </button>
+
+      <button
+        class="btn btn-danger"
+        onclick="confirmReject()">
+
+        Tolak Pengajuan
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ======================================================
+     LOADING
+====================================================== -->
+
+<div
+  class="loading"
+  id="loading">
+
+  <div class="loading-box">
+    Memproses...
+  </div>
+
+</div>
+
+
+<!-- ======================================================
+     TOAST
+====================================================== -->
+
+<div
+  class="toast"
+  id="toast">
+</div>
+
+
+<script>
+
+/* ======================================================
+   STATE
+====================================================== */
+
+let currentUser = null;
+let rejectId = '';
+
+let publicData = [];
+let waliData = [];
+let wakaData = [];
+
+
+/* ======================================================
+   DOM READY
+====================================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function() {
+
+    const today = getToday();
+
+    document.getElementById(
+      'publicDate'
+    ).value = today;
+
+    document.getElementById(
+      'izinTanggal'
+    ).value = today;
+
+    document.getElementById(
+      'waliHistoryDate'
+    ).value = today;
+
+    document.getElementById(
+      'wakaDate'
+    ).value = today;
+
+    loadPublicData();
+
+  }
+);
+
+
+/* ======================================================
+   DATE
+====================================================== */
+
+function getToday() {
+
+  const d = new Date();
+
+  const year = d.getFullYear();
+
+  const month = String(
+    d.getMonth() + 1
+  ).padStart(2, '0');
+
+  const day = String(
+    d.getDate()
+  ).padStart(2, '0');
+
+  return year + '-' + month + '-' + day;
+}
+
+
+/* ======================================================
+   PAGE
+====================================================== */
+
+function showPage(id) {
+
+  document
+    .querySelectorAll('.page')
+    .forEach(function(page) {
+
+      page.classList.remove('active');
+
+    });
+
+  document
+    .getElementById(id)
+    .classList.add('active');
+}
+
+
+function showPublic() {
+
+  showPage('publicPage');
+
+  document.getElementById(
+    'loginButton'
+  ).textContent = 'Login';
+
+  document.getElementById(
+    'loginButton'
+  ).onclick = showLogin;
+
+  loadPublicData();
+}
+
+
+function showLogin() {
+
+  showPage('loginPage');
+
+  setTimeout(function() {
+
+    document
+      .getElementById('username')
+      .focus();
+
+  }, 100);
+
+}
+
+
+/* ======================================================
+   LOGIN
+====================================================== */
+
+function loginUser() {
+
+  const username =
+    document.getElementById(
+      'username'
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      'password'
+    ).value.trim();
+
+  if (!username || !password) {
+
+    showToast(
+      'Username dan password wajib diisi.',
+      'error'
+    );
+
+    return;
+  }
+
+  showLoading(true);
+
+  google.script.run
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+      if (!result.success) {
+
+        showToast(
+          result.message,
+          'error'
+        );
+
+        return;
+      }
+
+      currentUser = result;
+
+      document.getElementById(
+        'loginButton'
+      ).textContent = 'Logout';
+
+      document.getElementById(
+        'loginButton'
+      ).onclick = logout;
+
+      if (result.role === 'WALI') {
+
+        showPage('waliPage');
+
+        document.getElementById(
+          'waliInfo'
+        ).innerHTML =
+          '<b>' +
+          escapeHtml(result.nama) +
+          '</b> &bull; Wali Kelas ' +
+          escapeHtml(result.kelas);
+
+        loadSiswaWali();
+        loadWaliHistory();
+
+      } else if (
+        result.role === 'WAKASEK'
+      ) {
+
+        showPage('wakaPage');
+
+        document.getElementById(
+          'wakaInfo'
+        ).innerHTML =
+          '<b>' +
+          escapeHtml(result.nama) +
+          '</b> &bull; Wakasek';
+
+        loadWakaData();
+
+      } else {
+
+        showToast(
+          'Role pengguna tidak dikenali.',
+          'error'
+        );
+
+      }
+
+    })
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      showToast(
+        error.message ||
+        'Terjadi kesalahan saat login.',
+        'error'
+      );
+
+    })
+    .login(username, password);
+
+}
+
+
+/* ======================================================
+   LOGOUT
+====================================================== */
+
+function logout() {
+
+  currentUser = null;
+
+  document.getElementById(
+    'username'
+  ).value = '';
+
+  document.getElementById(
+    'password'
+  ).value = '';
+
+  showPublic();
+
+}
+
+
+/* ======================================================
+   PUBLIC DATA
+====================================================== */
+
+function loadPublicData() {
+
+  const tanggal =
+    document.getElementById(
+      'publicDate'
+    ).value;
+
+  if (!tanggal) {
+
+    showToast(
+      'Pilih tanggal terlebih dahulu.',
+      'error'
+    );
+
+    return;
+  }
+
+  showLoading(true);
+
+  google.script.run
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+      publicData = result.data || [];
+
+      document.getElementById(
+        'statTotal'
+      ).textContent = result.total || 0;
+
+      document.getElementById(
+        'statKeluar'
+      ).textContent =
+        result.totalKeluar || 0;
+
+      document.getElementById(
+        'statMasuk'
+      ).textContent =
+        result.totalMasuk || 0;
+
+      renderPublicTable(publicData);
+
+    })
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      showToast(
+        error.message ||
+        'Gagal mengambil data.',
+        'error'
+      );
+
+    })
+    .getDashboardPublik(tanggal);
+
+}
+
+
+function renderPublicTable(data) {
+
+  const tbody =
+    document.getElementById(
+      'publicTable'
+    );
+
+  tbody.innerHTML = '';
+
+  if (!data.length) {
+
+    tbody.innerHTML =
+      '<tr>' +
+      '<td colspan="8" class="empty">' +
+      'Tidak ada siswa dengan izin yang disetujui pada tanggal tersebut.' +
+      '</td>' +
+      '</tr>';
+
+    return;
+  }
+
+  data.forEach(function(item, index) {
+
+    const tr =
+      document.createElement('tr');
+
+    tr.innerHTML =
+      '<td>' +
+      (index + 1) +
+      '</td>' +
+
+      '<td><b>' +
+      escapeHtml(item.nama) +
+      '</b></td>' +
+
+      '<td>' +
+      escapeHtml(item.nisn) +
+      '</td>' +
+
+      '<td>' +
+      escapeHtml(item.kelas) +
+      '</td>' +
+
+      '<td>' +
+      jenisBadge(item.jenisIzin) +
+      '</td>' +
+
+      '<td>' +
+      escapeHtml(item.alasan) +
+      '</td>' +
+
+      '<td>' +
+      escapeHtml(item.waktuKeluar || '-') +
+      '</td>' +
+
+      '<td>' +
+      escapeHtml(item.waktuKembali || '-') +
+      '</td>';
+
+    tbody.appendChild(tr);
+
+  });
+
+}
+
+
+function filterPublicTable() {
+
+  const keyword =
+    document.getElementById(
+      'publicSearch'
+    ).value
+      .trim()
+      .toLowerCase();
+
+  if (!keyword) {
+
+    renderPublicTable(publicData);
+
+    return;
+  }
+
+  const filtered =
+    publicData.filter(function(item) {
+
+      return (
+        String(item.nama)
+          .toLowerCase()
+          .includes(keyword) ||
+
+        String(item.kelas)
+          .toLowerCase()
+          .includes(keyword) ||
+
+        String(item.nisn)
+          .toLowerCase()
+          .includes(keyword)
+      );
+
+    });
+
+  renderPublicTable(filtered);
+
+}
+
+
+/* ======================================================
+   WALI - SISWA
+====================================================== */
+
+function loadSiswaWali() {
+
+  if (!currentUser) {
+    return;
+  }
+
+  showLoading(true);
+
+  google.script.run
+    .withSuccessHandler(function(data) {
+
+      showLoading(false);
+
+      const select =
+        document.getElementById(
+          'izinSiswa'
+        );
+
+      select.innerHTML =
+        '<option value="">-- Pilih Siswa --</option>';
+
+      data.forEach(function(item) {
+
+        const option =
+          document.createElement('option');
+
+        option.value = item.nisn;
+
+        option.textContent =
+          item.nama +
+          ' - ' +
+          item.kelas;
+
+        select.appendChild(option);
+
+      });
+
+    })
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      showToast(
+        error.message ||
+        'Gagal mengambil data siswa.',
+        'error'
+      );
+
+    })
+    .getSiswaUntukWali(
+      currentUser.kelas
+    );
+
+}
+
+
+/* ======================================================
+   WALI - SIMPAN
+====================================================== */
+
+function simpanIzin() {
+
+  if (!currentUser) {
+
+    showToast(
+      'Silakan login terlebih dahulu.',
+      'error'
+    );
+
+    return;
+  }
+
+  const tanggal =
+    document.getElementById(
+      'izinTanggal'
+    ).value;
+
+  const nisn =
+    document.getElementById(
+      'izinSiswa'
+    ).value;
+
+  const jenisIzin =
+    document.getElementById(
+      'izinJenis'
+    ).value;
+
+  const alasan =
+    document.getElementById(
+      'izinAlasan'
+    ).value.trim();
+
+  const waktuKeluar =
+    document.getElementById(
+      'izinWaktuKeluar'
+    ).value;
+
+  const waktuKembali =
+    document.getElementById(
+      'izinWaktuKembali'
+    ).value;
+
+  if (
+    !tanggal ||
+    !nisn ||
+    !jenisIzin ||
+    !alasan
+  ) {
+
+    showToast(
+      'Lengkapi data izin terlebih dahulu.',
+      'error'
+    );
+
+    return;
+  }
+
+  if (
+    waktuKeluar &&
+    waktuKembali &&
+    waktuKembali <= waktuKeluar
+  ) {
+
+    showToast(
+      'Waktu kembali harus lebih besar dari waktu keluar.',
+      'error'
+    );
+
+    return;
+  }
+
+  const data = {
+
+    username:
+      currentUser.username,
+
+    tanggal:
+      tanggal,
+
+    nisn:
+      nisn,
+
+    jenisIzin:
+      jenisIzin,
+
+    alasan:
+      alasan,
+
+    waktuKeluar:
+      waktuKeluar,
+
+    waktuKembali:
+      waktuKembali
+
+  };
+
+  showLoading(true);
+
+  google.script.run
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+      if (!result.success) {
+
+        showToast(
+          result.message,
+          'error'
+        );
+
+        return;
+      }
+
+      showToast(
+        result.message,
+        'success'
+      );
+
+      document.getElementById(
+        'izinSiswa'
+      ).value = '';
+
+      document.getElementById(
+        'izinAlasan'
+      ).value = '';
+
+      document.getElementById(
+        'izinWaktuKeluar'
+      ).value = '';
+
+      document.getElementById(
+        'izinWaktuKembali'
+      ).value = '';
+
+      loadWaliHistory();
+
+    })
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      showToast(
+        error.message ||
+        'Gagal menyimpan izin.',
+        'error'
+      );
+
+    })
+    .simpanIzin(data);
+
+}
+
+
+/* ======================================================
+   WALI - RIWAYAT
+====================================================== */
+
+function loadWaliHistory() {
+
+  if (!currentUser) {
+    return;
+  }
+
+  const tanggal =
+    document.getElementById(
+      'waliHistoryDate'
+    ).value;
+
+  if (!tanggal) {
+    return;
+  }
+
+  showLoading(true);
+
+  google.script.run
+    .withSuccessHandler(function(data) {
+
+      showLoading(false);
+
+      waliData = data || [];
+
+      renderWaliTable(waliData);
+
+    })
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      showToast(
+        error.message ||
+        'Gagal mengambil riwayat.',
+        'error'
+      );
+
+    })
+    .getIzinWali(
+      currentUser.username,
+      tanggal
+    );
+
+}
+
+
+function renderWaliTable(data) {
+
+  const tbody =
+    document.getElementById(
+      'waliTable'
+    );
+
+  tbody.innerHTML = '';
+
+  if (!data.length) {
+
+    tbody.innerHTML =
+      '<tr>' +
+      '<td colspan="8" class="empty">' +
+      'Belum ada pengajuan pada tanggal tersebut.' +
+      '</td>' +
+      '</tr>';
+
+    return;
+  }
+
+  data.forEach(function(item, index) {
+
+    const tr =
+      document.createElement('tr');
+
+    let keterangan = '-';
+
+    if (
+      item.status === 'DITOLAK'
+    ) {
+
+      keterangan =
+        '<b>Ditolak oleh:</b> ' +
+        escapeHtml(
+          item.approver || '-'
+        ) +
+        '<br>' +
+        '<b>Alasan:</b> ' +
+        escapeHtml(
+          item.keteranganApproval || '-'
+        );
+
+    } else if (
+      item.status === 'DISETUJUI'
+    ) {
+
+      keterangan =
+        '<b>Disetujui oleh:</b> ' +
+        escapeHtml(
+          item.approver || '-'
+        );
+
+    } else {
+
+      keterangan =
+        'Menunggu persetujuan Wakasek';
+
+    }
+
+    tr.innerHTML =
+
+      '<td>' +
+      (index + 1) +
+      '</td>' +
+
+      '<td><b>' +
+      escapeHtml(item.nama) +
+      '</b></td>' +
+
+      '<td>' +
+      escapeHtml(item.kelas) +
+      '</td>' +
+
+      '<td>' +
+      jenisBadge(item.jenisIzin) +
+      '</td>' +
+
+      '<td>' +
+      escapeHtml(item.alasan) +
+      '</td>' +
+
+      '<td>' +
+      escapeHtml(
+        item.waktuKeluar || '-'
+      ) +
+      ' - ' +
+      escapeHtml(
+        item.waktuKembali || '-'
+      ) +
+      '</td>' +
+
+      '<td>' +
+      statusBadge(item.status) +
+      '</td>' +
+
+      '<td>' +
+      keterangan +
+      '</td>';
+
+    tbody.appendChild(tr);
+
+  });
+
+}
+
+
+function filterWaliTable() {
+
+  const keyword =
+    document.getElementById(
+      'waliSearch'
+    ).value
+      .trim()
+      .toLowerCase();
+
+  const status =
+    document.getElementById(
+      'waliStatusFilter'
+    ).value;
+
+  const filtered =
+    waliData.filter(function(item) {
+
+      const cocokKeyword =
+        !keyword ||
+
+        String(item.nama)
+          .toLowerCase()
+          .includes(keyword) ||
+
+        String(item.kelas)
+          .toLowerCase()
+          .includes(keyword) ||
+
+        String(item.nisn)
+          .toLowerCase()
+          .includes(keyword);
+
+      const cocokStatus =
+        status === 'SEMUA' ||
+        item.status === status;
+
+      return cocokKeyword &&
+             cocokStatus;
+
+    });
+
+  renderWaliTable(filtered);
+
+}
+
+
+/* ======================================================
+   WAKASEK
+====================================================== */
+
+function loadWakaData() {
+
+  if (!currentUser) {
+    return;
+  }
+
+  const tanggal =
+    document.getElementById(
+      'wakaDate'
+    ).value;
+
+  if (!tanggal) {
+    return;
+  }
+
+  showLoading(true);
+
+  google.script.run
+    .withSuccessHandler(function(data) {
+
+      showLoading(false);
+
+      wakaData = data || [];
+
+      renderWakaTable(wakaData);
+
+    })
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      showToast(
+        error.message ||
+        'Gagal mengambil data pengajuan.',
+        'error'
+      );
+
+    })
+    .getPengajuanWakasek(tanggal);
+
+}
+
+
+function renderWakaTable(data) {
+
+  const tbody =
+    document.getElementById(
+      'wakaTable'
+    );
+
+  tbody.innerHTML = '';
+
+  if (!data.length) {
+
+    tbody.innerHTML =
+      '<tr>' +
+      '<td colspan="10" class="empty">' +
+      'Tidak ada data pengajuan pada tanggal tersebut.' +
+      '</td>' +
+      '</tr>';
+
+    return;
+  }
+
+  data.forEach(function(item, index) {
+
+    const tr =
+      document.createElement('tr');
+
+    let aksi = '-';
+
+    if (item.status === 'DIAJUKAN') {
+
+      aksi =
+        '<button ' +
+        'class="btn btn-success btn-small" ' +
+        'onclick="approveIzin(\'' +
+        escapeJs(item.id) +
+        '\')">' +
+        'Setujui' +
+        '</button> ' +
+
+        '<button ' +
+        'class="btn btn-danger btn-small" ' +
+        'onclick="openRejectModal(\'' +
+        escapeJs(item.id) +
+        '\')">' +
+        'Tolak' +
+        '</button>';
+
+    }
+
+    tr.innerHTML =
+
+      '<td>' +
+      (index + 1) +
+      '</td>' +
+
+      '<td><b>' +
+      escapeHtml(item.nama) +
+      '</b></td>' +
+
+      '<td>' +
+      escapeHtml(item.nisn) +
+      '</td>' +
+
+      '<td>' +
+      escapeHtml(item.kelas) +
+      '</td>' +
+
+      '<td>' +
+      jenisBadge(item.jenisIzin) +
+      '</td>' +
+
+      '<td>' +
+      escapeHtml(item.alasan) +
+      '</td>' +
+
+      '<td>' +
+      escapeHtml(
+        item.waktuKeluar || '-'
+      ) +
+      ' - ' +
+      escapeHtml(
+        item.waktuKembali || '-'
+      ) +
+      '</td>' +
+
+      '<td>' +
+      escapeHtml(item.pengaju) +
+      '</td>' +
+
+      '<td>' +
+      statusBadge(item.status) +
+      '</td>' +
+
+      '<td>' +
+      aksi +
+      '</td>';
+
+    tbody.appendChild(tr);
+
+  });
+
+}
+
+
+function filterWakaTable() {
+
+  const keyword =
+    document.getElementById(
+      'wakaSearch'
+    ).value
+      .trim()
+      .toLowerCase();
+
+  const status =
+    document.getElementById(
+      'wakaStatusFilter'
+    ).value;
+
+  const filtered =
+    wakaData.filter(function(item) {
+
+      const cocokKeyword =
+        !keyword ||
+
+        String(item.nama)
+          .toLowerCase()
+          .includes(keyword) ||
+
+        String(item.kelas)
+          .toLowerCase()
+          .includes(keyword) ||
+
+        String(item.nisn)
+          .toLowerCase()
+          .includes(keyword);
+
+      const cocokStatus =
+        status === 'SEMUA' ||
+        item.status === status;
+
+      return cocokKeyword &&
+             cocokStatus;
+
+    });
+
+  renderWakaTable(filtered);
+
+}
+
+
+/* ======================================================
+   APPROVE
+====================================================== */
+
+function approveIzin(id) {
+
+  if (!currentUser) {
+    return;
+  }
+
+  if (
+    !confirm(
+      'Apakah Anda yakin ingin menyetujui pengajuan ini?'
+    )
+  ) {
+    return;
+  }
+
+  showLoading(true);
+
+  google.script.run
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+      if (!result.success) {
+
+        showToast(
+          result.message,
+          'error'
+        );
+
+        return;
+      }
+
+      showToast(
+        result.message,
+        'success'
+      );
+
+      loadWakaData();
+
+    })
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      showToast(
+        error.message ||
+        'Gagal menyetujui pengajuan.',
+        'error'
+      );
+
+    })
+    .approveIzin(
+      id,
+      currentUser.username
+    );
+
+}
+
+
+/* ======================================================
+   REJECT
+====================================================== */
+
+function openRejectModal(id) {
+
+  rejectId = id;
+
+  document.getElementById(
+    'rejectReason'
+  ).value = '';
+
+  document.getElementById(
+    'rejectModal'
+  ).classList.add('show');
+
+}
+
+
+function closeRejectModal() {
+
+  rejectId = '';
+
+  document.getElementById(
+    'rejectModal'
+  ).classList.remove('show');
+
+}
+
+
+function confirmReject() {
+
+  if (!rejectId) {
+    return;
+  }
+
+  const alasan =
+    document.getElementById(
+      'rejectReason'
+    ).value.trim();
+
+  if (!alasan) {
+
+    showToast(
+      'Alasan penolakan wajib diisi.',
+      'error'
+    );
+
+    return;
+  }
+
+  showLoading(true);
+
+  google.script.run
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+      closeRejectModal();
+
+      if (!result.success) {
+
+        showToast(
+          result.message,
+          'error'
+        );
+
+        return;
+      }
+
+      showToast(
+        result.message,
+        'success'
+      );
+
+      loadWakaData();
+
+    })
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      showToast(
+        error.message ||
+        'Gagal menolak pengajuan.',
+        'error'
+      );
+
+    })
+    .tolakIzin(
+      rejectId,
+      currentUser.username,
+      alasan
+    );
+
+}
+
+
+/* ======================================================
+   BADGE
+====================================================== */
+
+function statusBadge(status) {
+
+  status =
+    String(status || '')
+      .toUpperCase();
+
+  if (status === 'DIAJUKAN') {
+
+    return (
+      '<span class="badge badge-warning">' +
+      'DIAJUKAN' +
+      '</span>'
+    );
+
+  }
+
+  if (status === 'DISETUJUI') {
+
+    return (
+      '<span class="badge badge-success">' +
+      'DISETUJUI' +
+      '</span>'
+    );
+
+  }
+
+  if (status === 'DITOLAK') {
+
+    return (
+      '<span class="badge badge-danger">' +
+      'DITOLAK' +
+      '</span>'
+    );
+
+  }
+
+  return (
+    '<span class="badge badge-blue">' +
+    escapeHtml(status) +
+    '</span>'
+  );
+
+}
+
+
+function jenisBadge(jenis) {
+
+  jenis =
+    String(jenis || '')
+      .toUpperCase();
+
+  if (jenis === 'KELUAR') {
+
+    return (
+      '<span class="badge badge-danger">' +
+      'KELUAR' +
+      '</span>'
+    );
+
+  }
+
+  if (jenis === 'MASUK') {
+
+    return (
+      '<span class="badge badge-blue">' +
+      'MASUK' +
+      '</span>'
+    );
+
+  }
+
+  return escapeHtml(jenis);
+
+}
+
+
+/* ======================================================
+   SECURITY DISPLAY
+====================================================== */
+
+function escapeHtml(value) {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return '';
+  }
+
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+
+}
+
+
+function escapeJs(value) {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return '';
+  }
+
+  return String(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'");
+}
+
+
+/* ======================================================
+   UI
+====================================================== */
+
+function showLoading(show) {
+
+  const element =
+    document.getElementById(
+      'loading'
+    );
+
+  if (show) {
+    element.classList.add('show');
+  } else {
+    element.classList.remove('show');
+  }
+
+}
+
+
+function showToast(
+  message,
+  type
+) {
+
+  const toast =
+    document.getElementById(
+      'toast'
+    );
+
+  toast.textContent =
+    message || '';
+
+  toast.className =
+    'toast show ' +
+    (type || '');
+
+  setTimeout(function() {
+
+    toast.classList.remove(
+      'show'
+    );
+
+  }, 3500);
+
+}
+
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js")
+      .then(function (registration) {
+        console.log(
+          "Service Worker berhasil:",
+          registration.scope
+        );
+      })
+      .catch(function (error) {
+        console.error(
+          "Service Worker gagal:",
+          error
+        );
+      });
+  });
+}
+</script>
+
+</body>
+</html>
